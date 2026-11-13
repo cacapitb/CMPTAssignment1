@@ -1,0 +1,27 @@
+----------------------------------------
+Design Document
+
+Author: Ben.C
+ID:3172656
+Lab/Lecture Instructor: Hanan S.
+----------------------------------------
+
+Initializing Heap:
+
+-   extern Char mem[] in memManager.H
+-   mem defined in InitializeMemory() in memManager.C 
+-   Header and Footer Created and set to positions in mem, calculated at pos 0 and 
+    sizeof(header) + mem[0].len
+
+TEST ONE: run InitializeMemory function in main.c and attempt access to mem[0].len
+RESULT: Failed. access at postion was not of type struct.
+
+-   tried again but casted the types to the positions.
+
+RESULT: Failed. compile warning relocation against`mem' in read-only section `.text'
+
+-   researched to find that the reference to mem isn't being found
+-   attempt initializing mem variable outside of Initialize function
+
+RESULT: Success.
+-   
