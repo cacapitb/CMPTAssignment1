@@ -11,3 +11,8 @@ memManager.o: memManager.c memManager.h
 
 memHelper: memHelper.c memHelper.h
 	$(CC) $(CFLAGS) -c memHelper.c
+
+.PHONY: clean
+
+clean:
+	rm -f *.o main

@@ -24,4 +24,89 @@ RESULT: Failed. compile warning relocation against`mem' in read-only section `.t
 -   attempt initializing mem variable outside of Initialize function
 
 RESULT: Success.
--   
+
+TEST TWO: attempt to access footer->len
+RESULT: Failed. value printed was 0
+
+- unsure if this was the char position's value of zero or the footers len assigned 0;
+- at this point decided testing getting to the footer position could use a helper
+  function to streamline testing.
+- while writing a function to return int taking in the header, realized returning a pointer
+  a footer could be more effecient
+- ran into compile errors while attempting to return a Footer pointer. occured during 
+  initialization so assuming issue with pointer arithmetic
+- issue found: in arithmetic did not cast header with (char *)
+
+Result: Success.
+
+Malloc:
+
+- Work on a get_next_header helper function, same logic as get_footer_pos, but account for 
+  footer size as well
+- impliment allignment helper function.
+    -   calculate remainder using passed size % 4, if zero return size, else return
+        size + (4 - remainder)
+- 
+- parse passed size into allignment
+- get initial header and its footer
+- get the end position of the heap
+- Enter a loop to check for an available chunk while the headers position is less than the heap size
+    - if the headers len is greater than the required size and the footer's len passes a 
+      mod 2 check
+      then allocate the space
+    - calculate remaining space after the required space is allocated
+    - if the remaining space is greater than the size of header/footer/min size of 
+      allocation(4) then split the chunk
+        - set head to new len
+        - create new footer and set to new len + 1 to flag as in use
+        - create new header and set len to remaining 
+        - set old footer len to remaining
+    - if not enough space for new partition then only modify the footer len to show allocation
+        - still need to make newhead and reference it to head to return from the function 
+          properly
+    - return newhead
+if newhead wasn't returned in the while loop return NULL;
+
+TEST THREE: create 2 allocations of size 20 and 58. check len of new p1 head->len is 20,
+            p2 footer = 61, and following footer = 65,432
+RESULT: Failed. issues with casting in while and returning newhead. 
+
+- Realize that I'm returning the header of the unallocated header. Adjusted to 
+  send the initial head.
+
+RESULT: Failed. End Footer len = 0
+
+- Adjusted test to indipendently assign and print all headers and footers 
+
+RESULT: Failed. initial header and footer lens were not correct, but values for p1/p2 correct.
+
+- not accounting for header/footer in allocation
+
+RESULT: Success.
+
+TEST FOUR: make a chunk that occupies the entire heap and then attempt to make another
+           chunk to have it return NULL
+RESULT: Success.
+
+Free:
+
+- get footer from ptr and set value to -=1
+- make helper function to get next header, adding the len of ptr and 8 (size of header/footer)
+- make helper to find previous footer by subtracting the size of Footer from the postion of ptr
+- make helper to find previous header by getting previous Footer, then subtracting by its len
+- use helper to get next header, and if its position is lower than the heap size grab its
+  footer.
+- check if its len mod 2 == 0. if it is then add the ptr len, the size of a header and footer,
+  and the next headers len.
+- use helper to find previous footer. if mod 2 = 0 then grab the prev header. set 
+  prevheader->len to equal itself + the size of footer and header + ptr->len, then set foot len
+  to prevheed->len
+
+TEST FIVE: impliment exampletest in assignment spec. should have an allocation of 4 and free of
+           65516
+RESULT: Failed. ton of errors in regards to ptr. dereferencing and request for members in 
+        something not a struct
+
+- assign a header to ptrs position and re-reference in the code
+
+RESULT: Success.

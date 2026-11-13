@@ -15,7 +15,13 @@
 
 #include "memManager.h"
 
+Footer * get_footer_pos(Header * header);
 
+Header * get_next_header(Header * header);
 
+int alignment(unsigned int sz);
 
+Footer * get_prev_footer(Header * header);
+
+Header * get_prev_header(Header * header);
 #endif // !MEMHELPER_H
