@@ -46,14 +46,12 @@ Malloc:
 - impliment allignment helper function.
     -   calculate remainder using passed size % 4, if zero return size, else return
         size + (4 - remainder)
-- 
 - parse passed size into allignment
 - get initial header and its footer
 - get the end position of the heap
 - Enter a loop to check for an available chunk while the headers position is less than the heap size
     - if the headers len is greater than the required size and the footer's len passes a 
-      mod 2 check
-      then allocate the space
+      mod 2 check then allocate the space
     - calculate remaining space after the required space is allocated
     - if the remaining space is greater than the size of header/footer/min size of 
       allocation(4) then split the chunk
@@ -102,11 +100,35 @@ Free:
   prevheader->len to equal itself + the size of footer and header + ptr->len, then set foot len
   to prevheed->len
 
-TEST FIVE: impliment exampletest in assignment spec. should have an allocation of 4 and free of
+TEST FIVE: impliment example test in assignment spec. should have an allocation of 4 and free of
            65516
 RESULT: Failed. ton of errors in regards to ptr. dereferencing and request for members in 
         something not a struct
 
-- assign a header to ptrs position and re-reference in the code
+- assign a local header to ptrs position and re-reference in the code
+
+RESULT: Success.
+
+mallocInfo:
+
+- already have a working solution for traversing the headers and footers
+- can use the same method to check if we are in the range of the heap
+- print title boxes (helper)
+- iterate through a while loop
+  - get header/ footer
+  - start = head pos + 4, size = head->len, end = start + size, foot->len mod 2 gives occupation
+  - print information (helper)
+  - print break line (helper)
+- can seperate size and address by if/else or switch statement
+
+TEST SIX: reproduce the values of the last example in specs
+RESULT: Failed. bytes away show as negative values, and the difference between the start and end
+        is not equal to the block size.
+
+- casting the header/footer position to int loses data as they are different sizes, there is
+  also no consideration of how far it is from the start of mem's position.
+- discovered that pointer to pointer addition also is not possible, so subtracting the position 
+  of header + 4 and footer by the position of mem to get distance.
+- still getting warnings for casting, but the output is correct now
 
 RESULT: Success.

@@ -88,3 +88,23 @@ void myFree(void * ptr)
 	}
 	
 }
+
+void mallocInfo(int i)
+{
+	Header * head = (Header *)mem;
+	Footer * foot = get_footer_pos(head);
+
+	print_title();
+
+	char * limit = mem + HEAP_SIZE;
+	while((char *)head < limit)
+	{
+		unsigned int status = foot->len % 2;
+		unsigned int size = head->len;
+		print_info_line(i,status, head, size, foot);
+
+		head = get_next_header(head);
+		foot = get_footer_pos(head);
+	}
+	
+}
