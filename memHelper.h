@@ -3,10 +3,10 @@
  * The API can NOT be modified.
  * All helper and/or debugging methods must go here.
  *
- * Author:
- * ID:
- * Lab instructor:
- * Lecture instructor:
+ * Author: Ben C.
+ * ID: 3172656
+ * Lab instructor: Hanan S.
+ * Lecture instructor: Hanan S.
  */
 
 

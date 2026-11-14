@@ -1,0 +1,90 @@
+----------------------------------------
+Testing Document
+
+Author: Ben.C
+ID:3172656
+Lab/Lecture Instructor: Hanan S.
+----------------------------------------
+
+Test One:
+
+run "make testOne"
+
+Malloc should find the first available space that can contain the memory you want
+to allocate. Test One will check to ensure that malloc will skip over spaces that cannot 
+contain the requested allocation and land in one that can
+
+- 2 mallocs will be called
+- the first ptr will be freed
+- another malloc will be called, of a size greater than the freed space, thus it will skip that
+  space and the occupied space and split the available space at the end
+
+
+
+Test Two:
+
+run "make testTwo"
+
+Here we will run the opposite of test one, where the space freed will be sufficient to store
+the new allocation. the size of memory reserved for the allocations need to be divisable by 4,
+so there can only be a remainder of 1, 2, and 3 on any declared size that are not a factor of 4.
+since the allocation must grow in order to contain the declared size, we will test all 3 cases
+as input and show that the appropiate size is assigned as well.
+
+- 2 mallocs are called
+- the first ptr is freed
+- another malloc is called, of a size smaller than the freed space, thus it will split that space
+- each malloc call will contain a value that does not allign with a 4-byte boundry, thus
+  triggering the allignment function to correct the size to a larger appropiate value
+
+
+
+Test Three: 
+
+run "make testThree"
+
+A partition should not be assigned after a split is made if it cannot properly serve as a usable
+space. This means the left over partition needs to be of the size of a header, footer, and the 
+assigned space needs to be aligned on the 4-byte boundry, so must be 4 bytes. These requirements
+add up to 12 bytes. If the new partition cannot fulfill this amount, then the allocation must
+occupy the space of the partition.
+
+malloc also needs to indicate when an allocation fails, namely when there is not enough space
+fulfill the allocation. this test will have an allocation of almost the entire heap, where
+less than 12 bytes will remain, forcing the allocation to occupy the partition, and then 
+another malloc will be called. Since there will be no room left, the ptr to the header will
+be assigned NULL and the user will be notified of such.
+
+- malloc of size 65520 is called
+- since 8 bytes will remain, the allocation will occupy the space of the would be partition
+- another malloc is called
+- since there is no space left on the heap, NULL will be returned
+
+
+
+Test Four:
+
+run "make testFour"
+
+As allocations are freed, the chunck should check its neighbors and see if it can coalesce 
+into one chunk of available memory. 
+
+- 10 mallocs are called
+- positions 2, 4, and 8 are freed
+- coalescing to the left, right, and both sides will be tested by freeing positions 
+  1, 5, 7, and 9
+
+
+
+Test 5:
+
+run "make testFive" - will fail, see below
+
+mallocInfo will be used to show outputs for other tests, but here the addresses will be shown
+to show consistency with the assignment Document
+
+- test conditions for the final example in the testing document will be recreated
+- addresses will differ, but their difference in positions should still match the byte 
+difference
+- since the addresses will change each time the executable is ran, there will be differences
+  that will pop up

@@ -18,36 +18,118 @@
 int main(int argc, char *argv[]){
 
 	initializeMemory();
+
+	printf("Post initialize check\n");
 	Header * head = (Header *)mem;
 	printf("Header len = %d", head->len);
 	Footer * foot = get_footer_pos((Header*)&mem[0]);
 	printf("\nFooter len = %d\n", foot->len);
 
-	Header * p1 = myMalloc(3);
-	Header * p2 = myMalloc(100);
-	Header * p3 = myMalloc(35);
-	Header * p4 = myMalloc(900);
-	Header * p5 = myMalloc(3560);
-	Header * p6 = myMalloc(52);
+	int choice;
+	scanf("%d", &choice);
+	switch(choice)
+	{
+		case 1:
+			printf("Test One\n");
 
-	myFree(p3);
-	myFree(p5);
+			Header * p1 = myMalloc(100);
+			Header * p2 = myMalloc(200);
 
-	mallocInfo(0);
-	mallocInfo(1);
-/*
-	printf("\nP1 Header Len = %d",p1->len);
-	Footer * p1foot = get_footer_pos(p1);
-	printf("\nP1 Footer Len = %d",p1foot->len);
+			printf("\nPre-free\n");
+			mallocInfo(1);
 
-	printf("\nP2 Header Len = %d", p2->len);
-	Footer * p2foot = get_footer_pos(p2);
-	printf("\nP2 Footer Len = %d",p2foot->len);
+			myFree(p1);
 
-	Header * newHead = get_next_header(p2);
-	printf("\nFree Header Len = %d",newHead->len);
-	printf("\nFree Footer Len = %d\n",foot->len);
-*/
+			Header * p3 = myMalloc(300);
+			printf("\nAfter free and new allocation\n");
+			mallocInfo(1);
+
+			break;
+		case 2:
+			printf("Test Two\n");
+
+			Header * p4 = myMalloc(99);
+			Header * p5 = myMalloc(198);
+
+			printf("\nPre-free\n");
+			mallocInfo(1);
+
+			myFree(p4);
+
+			Header * p6 = myMalloc(47);
+
+			printf("\nPost-Free and new allocation\n");
+			mallocInfo(1);
+
+			break;
+		case 3:
+			printf("Test Three\n");
+
+			Header * p7 = myMalloc(65520);
+			printf("\nOccupy partition\n");
+			mallocInfo(1);
+
+			Header * p8 = myMalloc(100);
+
+			printf("\nheap remains unchanged\n");
+			mallocInfo(1);
+
+			break;
+		case 4:
+			printf("Test Four\n");
+			Header * p9 = myMalloc(100);
+			Header * p10 = myMalloc(200);
+			Header * p11 = myMalloc(300);
+			Header * p12 = myMalloc(400);
+			Header * p13 = myMalloc(500);
+			Header * p14 = myMalloc(600);
+			Header * p15 = myMalloc(700);
+			Header * p16 = myMalloc(800);
+			Header * p17 = myMalloc(900);
+			Header * p18 = myMalloc(10000);
+
+			printf("\nPre-free\n");
+			mallocInfo(1);
+
+			myFree(p10);
+			myFree(p12);
+			myFree(p16);
+			
+			printf("\nFirst free\n");
+			mallocInfo(1);
+
+			myFree(p9);
+			myFree(p13);
+			myFree(p15);
+			myFree(p17);
+
+			printf("\nSecond free\n");
+			mallocInfo(1);
+
+			break;
+		case 5:
+			printf("Test Five\n");
+
+			Header * p19 = myMalloc(3);
+			Header * p20 = myMalloc(100);
+			Header * p21 = myMalloc(35);
+			Header * p22 = myMalloc(900);
+			Header * p23 = myMalloc(3560);
+			Header * p24 = myMalloc(52);
+
+
+			myFree(p21);
+			myFree(p23);
+
+			printf("Address\n");
+			mallocInfo(0);
+			printf("\nBytes\n");
+			mallocInfo(1);
+
+			break;
+		default:
+		printf("Error in test selection.");
+	}
   return 0;
 	
 }

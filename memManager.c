@@ -1,3 +1,12 @@
+/* memManager.c
+ *
+ * Author: Ben.C
+ * ID: 3172656
+ * Lab instructor: Hanan S.
+ * Lecture instructor: Hanan S.
+ */
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include  "memHelper.h"

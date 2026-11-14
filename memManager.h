@@ -27,7 +27,7 @@ typedef struct{
  *Declare your heap variable here
  *This variable can be static or dynamic of size HEAP_SIZE
  */
-extern char mem[HEAP_SIZE];
+extern char mem[HEAP_SIZE]; /* Ben.C*/
 
 
 /*
